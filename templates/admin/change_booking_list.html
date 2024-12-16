@@ -1,0 +1,13 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+    {{ block.super }}
+    <!-- Custom button or action -->
+
+    <b>Total Income: {{total_income}} BDT</b> 
+    <br>
+    <br>
+    <button type="button" class="button" id="my-custom-button" >
+        <a href="/report/" target="_blank" style="color: white;">Download Report</a>
+    </button>
+{% endblock %}

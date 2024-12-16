@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <main class="my-5 mb-5">
+    <div class="container dark-grey-text mt-5" style="padding-bottom: 150px;">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <img src= "{{hotel.image.url}}" class="img-fluid" alt="abc" >
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <h4>{{hotel.title}}</h4>
+
+            <div class="mb-3">
+              <a href="">
+                
+                <span class="badge purple mr-1"><i class="fa-solid fa-location-dot"></i> {{hotel.location}}</span>
+              </a>
+            </div>
+
+    
+            <p class="lead font-weight-bold">Description</p>
+
+            <p>{{ hotel.description }}</p>
+
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+
+
+   <!--Grid row-->
+   <div class="row wow fadeIn py-5">
+    {% for room in hotel.rooms.all %}
+    <!--Grid column-->
+    <div class="col-md-6">
+      <div class="card">
+        <img class="card-img-top" src="{{room.image.url}}" alt="Card image cap" style="height: 300px; object-fit: contain;">
+        <div class="card-body">
+          <h5 class="card-title">{{room.title}}</h5>
+          <h4 class="font-weight-bold blue-text">
+            <strong>৳
+            {{room.price}}
+            </strong>
+            <span style="font-size: 18px;">/Night</span>
+          </h4>
+          <p class="card-text">{{room.description}}</p>
+          <a href="{{room.pk}}/checkout/" class="btn btn-primary"> Process to checkout</a>
+        </div>
+      </div>
+
+    </div>
+    <!--Grid column-->
+    {% endfor %}
+
+
+  </div>
+  <!--Grid row-->
+
+
+    </div>
+  </main>
+
+
+
+  <script>
+    document.querySelectorAll(".nav-item")[1].classList.add("active");
+  </script>
+{% endblock content %}

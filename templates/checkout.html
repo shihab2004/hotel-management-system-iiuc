@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <main >
+    <div class="container wow fadeIn" style="padding-bottom: 150px;">
+      <h2 class="my-5 h2 text-center">Checkout form</h2>
+      <div class="row">
+        <div class="col-md-7 mb-4">
+          <div class="card">
+
+            {% if form.errors %}
+            <div style="color: red;">
+              {{form.errors}}
+            </div>
+            {% endif %}
+            
+            <form method="POST" class="card-body" action='{% url "booking" %}'>
+              {% csrf_token %}
+
+              <h3>Personal Information</h3>
+
+              <div class='hideable_shipping_form'>
+
+                <input type="hidden" name="hotel" value="{{room.hotel.pk}}">
+                <input type="hidden" name="room" value="{{room.pk}}">
+
+                <div class="md-form mb-5">
+                  <input type='text'  name='user_full_name' class='form-control'  required />
+                  <label for="user_full_name" class="">Full Name</label>
+                </div>
+                <div class="md-form mb-5">
+                  <input type='text' name='user_phone' class='form-control'  required />
+                  <label for="user_phone" class="">Phone</label>
+                </div>
+                <div class="md-form mb-5">
+                  <input type='text' name='user_email' class='form-control' />
+                  <label for="user_email" class="">Email</label>
+                </div>
+                <div class="md-form mb-5">
+                  <input type='text'  id='shipping_address' name='user_address' class='form-control' required />
+                  <label for="user_address" class="">Address</label>
+                </div>
+              </div>
+
+ 
+              <hr>
+
+              <h3>Booking Information</h3>
+
+              <div class='hideable_billing_form'>
+
+
+                <div class="md-form mb-5">
+                  <input type='date'  id='checkin' name='checkin' class='form-control' required />
+                  <label for="checkin" class="">Check In</label>
+                </div>
+
+                <div class="md-form mb-5">
+                  <input type='date'  id='checkout' name='checkout' class='form-control' required />
+                  <label for="checkout" class="">Checkout Out </label>
+                </div>
+
+                
+                <div class="md-form mb-5">
+                  <input type='text'  id='billing_address' name='adult' class='form-control' />
+                  <label for="adult" class="">Adult</label>
+                </div>
+
+                <div class="md-form mb-5">
+                  <input type='text'  id='billing_address' name='child' class='form-control' />
+                  <label for="child" class="">Child</label>
+                </div>
+
+               
+            
+              </div>
+
+              <hr>
+
+              <button class="btn btn-primary btn-lg btn-block" type="submit" id="submit">Continue to checkout</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-5 mb-4">
+
+                <div class="col-md-12 mb-4">
+                  <h4 class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted">Your cart</span>
+                  <span class="badge badge-secondary badge-pill">{{ order.items.count }}</span>
+                  </h4>
+                  <ul class="list-group mb-3 z-depth-1">
+              
+                  <li class="list-group-item d-flex justify-content-between lh-condensed">
+                      <div>
+                      <h6 class="my-0">{{room.title}}</h6>
+                      </div>
+                      <span class="text-muted">৳ {{ room.price }} /night</span>
+                  </li>
+              
+                  <li class="list-group-item d-flex justify-content-between">
+                      <span>Total (BDT)</span>
+                      <strong id='hotel_price'>৳ </strong>
+                  </li>
+                  </ul>
+              
+              </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+const per_night = {{room.price}}
+
+function set_total_price(event){
+  const checkin = $("#checkin").val();
+  const checkout = $("#checkout").val();
+
+  $('#hotel_price').text(`৳ `)
+  $('#submit').attr("disabled",true)
+
+  if (checkin && checkout) {
+                // Convert the date strings to Date objects
+                const d1 = new Date(checkin);
+                const d2 = new Date(checkout);
+                const currentDate = new Date();
+                
+                // Calculate the difference in milliseconds
+                const diffTime = d2 - d1;
+                
+                // Convert milliseconds to days (1 day = 24 hours * 60 minutes * 60 seconds * 1000 milliseconds)
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                
+                const diffFromToday = Math.ceil( (d1-currentDate) / (1000 * 60 * 60 * 24))
+                
+                
+                if( (diffFromToday <= -1) || ( diffDays <= 0)) return;
+                $('#hotel_price').text(`৳ ${diffDays * per_night}`)
+                $('#submit').attr("disabled",false)
+
+                
+            } 
+    
+}
+
+
+$("#checkin").change(set_total_price)
+$("#checkout").change(set_total_price)
+</script>
+{% endblock extra_scripts %}
