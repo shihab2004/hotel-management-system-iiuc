@@ -45,37 +45,56 @@
       </div>
       <!--Grid row-->
 
-      <hr>
 
 
 
    <!--Grid row-->
+   <h2 class="text-center">Rooms</h2>
+   {% for room in hotel.rooms.all %}
+   <div class="card my-2">
+
    <div class="row wow fadeIn py-5">
-    {% for room in hotel.rooms.all %}
     <!--Grid column-->
-    <div class="col-md-6">
-      <div class="card">
+   
+
+
+        
+        <div class="col-md-6">
+
         <img class="card-img-top" src="{{room.image.url}}" alt="Card image cap" style="height: 300px; object-fit: contain;">
-        <div class="card-body">
-          <h5 class="card-title">{{room.title}}</h5>
-          <h4 class="font-weight-bold blue-text">
-            <strong>৳
-            {{room.price}}
-            </strong>
-            <span style="font-size: 18px;">/Night</span>
-          </h4>
-          <p class="card-text">{{room.description}}</p>
-          <a href="{{room.pk}}/checkout/" class="btn btn-primary"> Process to checkout</a>
-        </div>
+
+          
+
+        
+
+
       </div>
+
+
+      <div class="col-md-6">
+
+      <div class="card-body">
+        <h5 class="card-title">{{room.title}}</h5>
+        <h4 class="font-weight-bold blue-text">
+          <strong>৳
+          {{room.price}}
+          </strong>
+          <span style="font-size: 18px;">/Night</span>
+        </h4>
+        <p class="card-text">{{room.description}}</p>
+        <a href="{{room.pk}}/checkout/" class="btn btn-primary"> Process to checkout</a>
+      </div>
+    </div>
+
 
     </div>
     <!--Grid column-->
+  </div>
+  <!--Grid row-->
+
     {% endfor %}
 
 
-  </div>
-  <!--Grid row-->
 
 
     </div>

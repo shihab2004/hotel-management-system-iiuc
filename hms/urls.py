@@ -31,7 +31,7 @@ urlpatterns = [
     path("",home),
     
     
-    path('hotels/', HotelView.as_view(), name='hotels'),
+    path('hotels/', hotel_view, name='hotels'),
     path('hotels/<int:pk>/', hotel_detail, name='hotel-detail'),
     
     

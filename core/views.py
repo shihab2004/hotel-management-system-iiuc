@@ -15,12 +15,10 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.views.generic.list import ListView
 
-class HotelView(ListView):
-    model = Hotel
-    paginate_by = 10  
-    template_name = "hotel_list.html"
-    
 
+    
+def hotel_view(request):
+    return render(request, "hotel_list.html",{"object_list":Hotel.objects.all()})
     
 
 
